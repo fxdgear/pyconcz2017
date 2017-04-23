@@ -1,0 +1,8 @@
+FROM python:3.6.1
+
+RUN mkdir /code
+COPY . /code
+VOLUME [/code]
+WORKDIR /code
+
+CMD ["python", "add_test.py"]
