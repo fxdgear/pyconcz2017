@@ -1,9 +1,17 @@
 # Notes
 
-Tox cons:
+## Tox
+Pros:
+    * has been around a while
+    * lots of user adoption, which means lots of blog posts and articles which can help
+
+cons:
 	* Complex tox.ini file to properly configure your environments
 	* No parallel executiion
 	* slow execution
+    * no guarentee that the environtment that your tests run in is going to be the same as your prod env
+    * assumes that every version you want to test against locally installed. no isolation of dependencies (pip reqs not included)
+    * not transportable (ie running the tests in your CI will not be guarenteed to execute the same way locally)
 	* require that all the different python interpreters must be installed or you get this:
 
 ```
@@ -49,5 +57,13 @@ ERROR:   py35: InterpreterNotFound: python3.5
   py36: commands succeeded
 ```
 
-Docker cons:
-	require X different dockerfiles for each environment you want to test
+## Docker
+Pros:
+    * Tests will run in a production like environment
+    * Tests will run in Parallel
+    * tests infa is portable
+    * only requirement is that Docker is installed.
+
+cons:
+	* requires a different dockerfile for each environment you want to test
+    * getting test output data needs some some processing

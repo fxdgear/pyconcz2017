@@ -6,28 +6,13 @@ services:
   2.7.13:
     build:
       context: .
-      dockerfile: ./dockerfiles/Dockerfile.3.3.6
+      dockerfile: ./dockerfiles/Dockerfile.2.7.13
     volumes:
       - .:/code
     depends_on:
       - db_27
     environment:
       - DB_HOST=db_27
-
-  db_33:
-     image: postgres
-
-  3.3.6:
-    build:
-      context: .
-      dockerfile: ./dockerfiles/Dockerfile.3.3.6
-    volumes:
-      - .:/code
-    depends_on:
-      - db_33
-    environment:
-      - DB_HOST=db_33
-
 
   db_34:
      image: postgres

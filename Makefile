@@ -1,6 +1,20 @@
+make_migrations:
+	docker-compose run web python manage.py makemigrations
+run_migrations:
+	docker-compose run web python manage.py migrate
+
 build:
-	docker build -t testing:2.7.13 -f Dockerfile.2.7.13 . && \
-	docker build -t testing:3.3.6 -f Dockerfile.3.3.6 . && \
-	docker build -t testing:3.4.6 -f Dockerfile.3.4.6 . && \
-	docker build -t testing:3.5.3 -f Dockerfile.3.5.3 . && \
-	docker build -t testing:3.6.1 -f Dockerfile.3.6.1 .
+	docker-compose -f docker-compose.testing.yml build
+
+py27:
+	docker-compose -f docker-compose.testing.yml run 2.7.13
+py34:
+	docker-compose -f docker-compose.testing.yml run 3.4.6
+py35:
+	docker-compose -f docker-compose.testing.yml run 3.5.3
+py36:
+	docker-compose -f docker-compose.testing.yml run 3.6.1
+all:
+	docker-compose -f docker-compose.testing.yml up -d
+logs:
+	docker-compose -f docker-compose.testing.yml logs
