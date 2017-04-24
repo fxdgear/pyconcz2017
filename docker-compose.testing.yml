@@ -1,0 +1,75 @@
+version: '2'
+services:
+  db_27:
+     image: postgres
+
+  2.7.13:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/Dockerfile.3.3.6
+    volumes:
+      - .:/code
+    depends_on:
+      - db_27
+    environment:
+      - DB_HOST=db_27
+
+  db_33:
+     image: postgres
+
+  3.3.6:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/Dockerfile.3.3.6
+    volumes:
+      - .:/code
+    depends_on:
+      - db_33
+    environment:
+      - DB_HOST=db_33
+
+
+  db_34:
+     image: postgres
+
+  3.4.6:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/Dockerfile.3.4.6
+    volumes:
+      - .:/code
+    depends_on:
+      - db_34
+    environment:
+      - DB_HOST=db_34
+
+
+  db_35:
+     image: postgres
+
+  3.5.3:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/Dockerfile.3.5.3
+    volumes:
+      - .:/code
+    depends_on:
+      - db_35
+    environment:
+      - DB_HOST=db_35
+
+
+  db_36:
+     image: postgres
+
+  3.6.1:
+    build:
+      context: .
+      dockerfile: ./dockerfiles/Dockerfile.3.6.1
+    volumes:
+      - .:/code
+    depends_on:
+      - db_36
+    environment:
+      - DB_HOST=db_36
+

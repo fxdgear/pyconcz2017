@@ -1,14 +1,7 @@
-FROM ubuntu:16.04
-
-RUN \
-  apt-get update && \
-  apt-get install -y python python-dev python-pip && \
-  rm -rf /var/lib/apt/lists/*
-
-RUN pip install -U jinja PyYAML docker
-
-WORKDIR /code
-COPY . /code
-
-CMD ["python", "run.py"]
-
+ FROM python:3
+ ENV PYTHONUNBUFFERED 1
+ RUN mkdir /code
+ WORKDIR /code
+ ADD requirements.txt /code/
+ RUN pip install -r requirements.txt
+ ADD . /code/

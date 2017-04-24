@@ -1,8 +1,0 @@
-FROM python:2.7.13
-
-RUN mkdir /code
-COPY . /code
-VOLUME [/code]
-WORKDIR /code
-
-CMD ["python", "/code/add_test.py"]
