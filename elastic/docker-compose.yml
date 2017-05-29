@@ -1,0 +1,54 @@
+version: '3.1'
+services:
+  client53:
+    image: fxdgear/elasticsearch-py:latest
+    environment:
+      - DEBUG=1
+      - TEST_ES_SERVER=http://elasticsearch53:9200
+    command: "python setup.py test"
+    networks:
+      - es53
+    command: ["./wait-for-elasticsearch.sh", "--", "python", "setup.py", "test"]
+
+  client54:
+    image: fxdgear/elasticsearch-py:latest
+    environment:
+      - DEBUG=1
+      - TEST_ES_SERVER=http://elasticsearch54:9200
+    command: "python setup.py test"
+    networks:
+      - es54
+    command: ["./wait-for-elasticsearch.sh", "--", "python", "setup.py", "test"]
+
+  client24:
+    image: fxdgear/elasticsearch-py:latest
+    environment:
+      - DEBUG=1
+      - TEST_ES_SERVER=http://elasticsearch24:9200
+    command: "python setup.py test"
+    networks:
+      - es24
+    command: ["./wait-for-elasticsearch.sh", "--", "python", "setup.py", "test"]
+
+  elasticsearch53:
+    image: fxdgear/elasticsearch:5.3
+    networks:
+      - es53
+
+  elasticsearch54:
+    image: fxdgear/elasticsearch:5.4
+    networks:
+      - es54
+
+  elasticsearch24:
+    image: fxdgear/elasticsearch:2.4
+    networks:
+      - es24
+
+
+
+networks:
+  es53:
+  es54:
+  es24:
+

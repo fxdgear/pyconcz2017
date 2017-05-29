@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Using Docker to Parallize Your Tests</title>
+    <meta charset="utf-8">
+    <script src="https://use.fontawesome.com/d8d228dcc1.js"></script>
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+      body { font-family: 'Droid Serif'; }
+      h1, h2, h3 {
+        font-family: 'Yanone Kaffeesatz';
+        font-weight: normal;
+      }
+      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Using Containers to Parallize Your Tests
+
+A replacement for Tox
+
+---
+
+# Who am I?
+
+Nick Lang
+
+I work at Elastic Search
+
+I am not a viking.
+
+[fxdgear](https://twitter.com/fxdgear)
+[https://github.com/fxdgear](https://github.com/fxdgear)
+
+---
+
+# Well what is Tox anyway?
+
+Tox is a great tool for allowing testing your code
+against a varaity of different Python interpeters.
+
+
+---
+
+# What is Tox good for?
+
+* Say you have this great 3rd party Django app.
+* You do you development in a virtual env.
+* You use the latest version of Python.
+* You write your tests.
+* You publish your app on PyPI.
+
+Everything is great!
+
+---
+
+# First Bug
+
+Your app doesn't work with X version of Django
+
+Easy,
+
+1. create a new venv
+2. install X version of Django
+3. run tests
+4. debug
+5. fix
+6. publish
+
+---
+
+# Second Bug
+
+Your app doesn't work with Y version of Python.
+
+First you have to install Y version of Python
+and create a new venv and repeat the steps from before.
+
+---
+
+# New Feature
+
+Now you want to make a new feature. And now you have to make sure
+your code works in 3 different virtual envs.
+
+---
+# And so on...
+
+I'm sure you can see where this is going now...
+
+---
+
+# Enter Tox
+
+Tox allows you to create a single file which will dynamically create venvs for you
+will run your tests across all the different permuations you can think of.
+
+```
+# content of: tox.ini , put in same dir as setup.py
+[tox]
+envlist = py26,py27
+[testenv]
+deps=pytest # or 'nose' or ...
+commands=py.test  # or 'nosetests' or ...
+```
+
+---
+
+# Problem solved?
+
+This is where most people stop. But not you. You're here cause you want more!
+
+---
+
+# Problems
+
+Tox requires that you have all the different versions of python installed.
+
+* python 2.6
+* python 2.7
+* python 3.3
+* python 3.4
+* python 3.5
+* python 3.6
+* python 3.7
+* jython
+* pypy
+* pypy3
+
+---
+
+# Portaility
+
+Virtual envs are not easily portable.
+
+While it is possible to take one virtual env and transfer it to a different machine
+it is not very easy.
+
+Also you will have to install each version of python on each machine you want to transfer
+the venv too.
+
+---
+
+# Parallelism
+
+Tox is not a parallelizable solution. The more permuations you have in your test matrix
+the longer your test matrix will take.
+
+---
+
+# Real backends
+
+Using Tox against a varaity of backends (mysql, postgres, SQLServer, etc...) will require
+that each of these backends be installed.
+
+Do you really want to install SQLServer on your computer? Eww
+
+---
+
+# Versions...
+
+Lets not forget that each of these backends have different versions too...
+
+---
+
+# Recap
+
+We have lets say:
+
+* 10 versions of python
+* 7 versions of Django
+* 3 different database backends
+
+10 * 7 * 3 = 210 different tests to run
+
+Also lets say our tests are fast and complete in 1 minute.
+
+This will take tox 3.5 hours to complete.
+
+Who has time for this?
+
+---
+
+# Docker to the rescue
+
+By using Docker we can
+
+1. parallize the execution of the tests
+2. make our test environment portable
+3. smaller install footprint
+4. easily run a subset of the tests
+
+
+---
+# Trade Offs
+
+To do our stuff in docker there exists a few trade offs...
+
+---
+
+# Setup Tradeoff
+
+Each element in our test matrix requires a different Dockerfile.
+
+The good news is that all the dockerfiles are basically the same. Just with
+different `FROM` statements.
+
+We are programmers this can be solved using a templeting library.
+
+---
+
+# Output Tradeoff
+
+Since the tests are run in parallel it's hard to view the test results in the console.
+
+We'll have to use Docker's built in logging to view the logs that come from each
+test matrix element.
+
+---
+
+# Install Tradeoff
+
+Docker and Docker Compost will need to be installed vs each
+
+
+
+
+
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js">
+    </script>
+    <script>
+      var slideshow = remark.create();
+    </script>
+  </body>
+</html>

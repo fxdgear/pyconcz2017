@@ -10,7 +10,7 @@ cons:
 	* No parallel executiion
 	* slow execution
     * no guarentee that the environtment that your tests run in is going to be the same as your prod env
-    * assumes that every version you want to test against locally installed. no isolation of dependencies (pip reqs not included)
+    * assumes that every python version you want to test against locally installed. no isolation of global dependencies (pip reqs not included)
     * not transportable (ie running the tests in your CI will not be guarenteed to execute the same way locally)
 	* require that all the different python interpreters must be installed or you get this:
 
@@ -65,5 +65,5 @@ Pros:
     * only requirement is that Docker is installed.
 
 cons:
-	* requires a different dockerfile for each environment you want to test
+	* requires more upftont work than Tox
     * getting test output data needs some some processing
