@@ -62,8 +62,15 @@ services:
 
   elasticsearch24:
     image: fxdgear/elasticsearch:2.4
+    environment:
+      - script.inline=true
+      - path.repo=/tmp
+      - "repositories.url.allowed_urls=http://*"
+      - node.attr.testattr=test
     networks:
       - es24
+    volumes:
+      - es24:/tmp
 
 networks:
   es53:
