@@ -3,52 +3,74 @@ services:
   client53:
     image: fxdgear/elasticsearch-py:latest
     environment:
-      - DEBUG=1
       - TEST_ES_SERVER=http://elasticsearch53:9200
-    command: "python setup.py test"
     networks:
       - es53
+    volumes:
+      - es53:/tmp
+    depends_on:
+      - elasticsearch53
     command: ["./wait-for-elasticsearch.sh", "--", "python", "setup.py", "test"]
 
   client54:
     image: fxdgear/elasticsearch-py:latest
     environment:
-      - DEBUG=1
       - TEST_ES_SERVER=http://elasticsearch54:9200
-    command: "python setup.py test"
     networks:
       - es54
+    volumes:
+      - es54:/tmp
+    depends_on:
+      - elasticsearch54
     command: ["./wait-for-elasticsearch.sh", "--", "python", "setup.py", "test"]
 
   client24:
     image: fxdgear/elasticsearch-py:latest
     environment:
-      - DEBUG=1
       - TEST_ES_SERVER=http://elasticsearch24:9200
-    command: "python setup.py test"
     networks:
       - es24
+    volumes:
+      - es24:/tmp
+    depends_on:
+      - elasticsearch24
     command: ["./wait-for-elasticsearch.sh", "--", "python", "setup.py", "test"]
 
   elasticsearch53:
     image: fxdgear/elasticsearch:5.3
+    environment:
+      - script.inline=true
+      - path.repo=/tmp
+      - "repositories.url.allowed_urls=http://*"
+      - node.attr.testattr=test
     networks:
       - es53
+    volumes:
+      - es53:/tmp
 
   elasticsearch54:
     image: fxdgear/elasticsearch:5.4
+    environment:
+      - script.inline=true
+      - path.repo=/tmp
+      - "repositories.url.allowed_urls=http://*"
+      - node.attr.testattr=test
     networks:
       - es54
+    volumes:
+      - es54:/tmp
 
   elasticsearch24:
     image: fxdgear/elasticsearch:2.4
     networks:
       - es24
 
-
-
 networks:
   es53:
   es54:
   es24:
 
+volumes:
+  es54:
+  es53:
+  es24:
